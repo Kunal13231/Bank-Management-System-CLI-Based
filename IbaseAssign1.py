@@ -4,34 +4,34 @@ file = "bank.xlsx"
 
 # Create Excel file
 try:
-    wb = openpyxl.load_workbook(file)
-    ws = wb.active
+    wkb = openpyxl.load_workbook(file)
+    ws = wkb.active
 except FileNotFoundError:
-    wb = openpyxl.Workbook()
-    ws = wb.active
+    wkb = openpyxl.Workbook()
+    ws = wkb.active
     ws.append(["Name", "Mobile", "Balance"])
-    wb.save(file)
+    wkb.save(file)
     
 
 
 def add_new():
-    wb = openpyxl.load_workbook(file)
-    ws = wb.active
+    wkb = openpyxl.load_workbook(file)
+    ws = wkb.active
 
     name = input("Enter Your Name: ")
     mobile = input("Enter Mobile Number: ")
     balance = float(input("Enter Opening Balance: "))
 
     ws.append([name, mobile, balance])
-    wb.save(file)
-    wb.close()
+    wkb.save(file)
+    wkb.close()
 
     print("Account Created Successfully!")
 
 
 def deposit_money():
-    wb = openpyxl.load_workbook(file)
-    ws = wb.active
+    wkb = openpyxl.load_workbook(file)
+    ws = wkb.active
 
     mobile = input("Enter Mobile Number: ")
     amount = float(input("Enter Amount to Deposit: "))
@@ -39,18 +39,18 @@ def deposit_money():
     for row in range(2, ws.max_row + 1):
         if str(ws.cell(row, 2).value) == mobile:
             ws.cell(row, 3).value += amount
-            wb.save(file)
-            wb.close()
+            wkb.save(file)
+            wkb.close()
             print("Money Deposited Successfully!")
             return
 
     print("Account Not Found!")
-    wb.close()
+    wkb.close()
 
 
 def withdrawal_money():
-    wb = openpyxl.load_workbook(file)
-    ws = wb.active
+    wkb = openpyxl.load_workbook(file)
+    ws = wkb.active
 
     mobile = input("Enter Mobile Number: ")
     amount = float(input("Enter Amount to Withdraw: "))
@@ -63,21 +63,21 @@ def withdrawal_money():
                 print("Enter a Valid Amount!")
             elif amount <= balance:
                 ws.cell(row, 3).value = balance - amount
-                wb.save(file)
+                wkb.save(file)
                 print("Money Withdrawn Successfully!")
             else:
                 print("Insufficient Balance!")
 
-            wb.close()
+            wkb.close()
             return
 
     print("Account Not Found!")
-    wb.close()
+    wkb.close()
 
 
 def view_balance():
-    wb = openpyxl.load_workbook(file)
-    ws = wb.active
+    wkb = openpyxl.load_workbook(file)
+    ws = wkb.active
 
     mobile = input("Enter Mobile Number: ")
 
@@ -85,11 +85,11 @@ def view_balance():
         if str(ws.cell(row, 2).value) == mobile:
             print("Name:", ws.cell(row, 1).value)
             print("Current Balance: Rs.", ws.cell(row, 3).value)
-            wb.close()
+            wkb.close()
             return
 
     print("Account Not Found!")
-    wb.close()
+    wkb.close()
 
 
 def menu():
@@ -113,9 +113,11 @@ def menu():
             view_balance()
         elif choice == "5":
             print("Thank You!")
+            print("Rate My Code...!")
             break
         else:
             print("Invalid Choice!")
 
 
 menu()
+
